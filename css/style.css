@@ -103,3 +103,33 @@ h2 {
 .result-display.active {
   display: block;
 }
+
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.transaction-item:last-child {
+  border-bottom: none;
+}
+
+.transaction-item div {
+  margin-right: 1rem;
+}
+
+.transaction-item div:last-child {
+  margin-right: 0;
+}
+
+.address {
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+.amount {
+  font-weight: bold;
+  color: var(--primary-color);
+}
