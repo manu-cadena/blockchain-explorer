@@ -2,47 +2,67 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://kit.fontawesome.com/55174c58a9.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="./assets/css/site.css" />
-  <title>Block Explorer</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blockchain Explorer</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="js/main.js"></script>
 </head>
 
 <body>
   <header>
     <nav>
-      <div>
-        <ul class="menu">
-          <li class="logo">
-            <a href="./index.html"><span><i class="fa-sharp fa-light fa-hexagon-image"></i></span>
-              Block Explorer</a>
-          </li>
-          <li class="toggle">
-            <input class="menu-btn" type="checkbox" id="menu-btn" />
-            <label class="menu-icon" for="menu-btn"><span class="nav-icon"></span>
-            </label>
-          </li>
-          <li class="menu-item">
-            <a class="active" href="./index.html">Start</a>
-          </li>
-          <li class="menu-item">
-            <a href="./pages/blocks.html">Block</a>
-          </li>
-          <li class="menu-item">
-            <a href="./pages/transactions.html">Transactions</a>
-          </li>
-          <li class="menu-item">
-            <a href="./pages/create-transaction.html">Transaction</a>
-          </li>
-        </ul>
+      <div class="container">
+        <h1>Blockchain Explorer</h1>
       </div>
     </nav>
   </header>
   <main>
-    <h1 class="page-title">Block Explorer Demo</h1>
-    <div class="main-image">
-      <img src="./assets/images/ethereum.png" alt="Blockchain" />
+    <div class="container">
+      <section id="blockchain-info">
+        <h2>Blockchain Information</h2>
+        <div class="info-card">
+          <p>Current Block Number: <span id="block-number">Loading...</span></p>
+        </div>
+      </section>
+
+      <!-- Add new balance checking section -->
+      <section id="balance-checker">
+        <h2>Check Account Balance</h2>
+        <div class="info-card">
+          <form id="balance-form">
+            <div class="form-control">
+              <label for="address">Ethereum Address:</label>
+              <input type="text" id="address" placeholder="Enter Ethereum address" required>
+            </div>
+            <button type="submit" class="btn btn-rounded">Check Balance</button>
+          </form>
+          <div id="balance-result" class="result-display"></div>
+        </div>
+      </section>
+
+      <!-- Add new transaction section -->
+      <section id="create-transaction">
+        <h2>Create Transaction</h2>
+        <div class="info-card">
+          <form id="transaction-form">
+            <div class="form-control">
+              <label for="from">From Address:</label>
+              <input type="text" id="from" placeholder="Sender's address" required>
+            </div>
+            <div class="form-control">
+              <label for="to">To Address:</label>
+              <input type="text" id="to" placeholder="Recipient's address" required>
+            </div>
+            <div class="form-control">
+              <label for="value">Amount (ETH):</label>
+              <input type="number" id="value" placeholder="Amount in ETH" step="0.001" required>
+            </div>
+            <button type="submit" class="btn btn-rounded">Send Transaction</button>
+          </form>
+          <div id="transaction-result" class="result-display"></div>
+        </div>
+      </section>
     </div>
   </main>
 </body>
