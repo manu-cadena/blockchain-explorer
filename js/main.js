@@ -1,7 +1,10 @@
 import { createClient, createWallet } from './explorer.js';
-import { updateBlockDisplay } from './block.js';
-import { checkBalance } from './balance.js';
-import { sendTransaction, updateTransactionHistory } from './transactions.js';
+import { updateBlockDisplay } from './services/blockService.js';
+import { checkBalance } from './services/balanceService.js';
+import {
+  sendTransaction,
+  updateTransactionHistory,
+} from './services/transactionService.js';
 
 async function init() {
   const client = createClient();
@@ -49,6 +52,7 @@ async function init() {
         elements.transactionForm,
         async (address) => {
           await Promise.all([
+            updateBlockDisplay(client, elements.blockNumber),
             checkBalance(client, address, elements.balanceResult),
             updateTransactionHistory(client, elements.transactionsList),
           ]);
