@@ -22,10 +22,7 @@ async function init() {
 
   try {
     // Initial blocks display
-    await Promise.all([
-      updateBlocksDisplay(client, elements.blocksList),
-      updateTransactionHistory(client, elements.transactionsList),
-    ]);
+    await updateBlocksDisplay(client, elements.blocksList);
 
     // Handle balance form submission
     elements.balanceForm.addEventListener('submit', async (e) => {
@@ -52,7 +49,7 @@ async function init() {
         elements.transactionResult,
         elements.transactionForm,
         async (address) => {
-          // Update blocks, balance, and transaction history after transaction
+          // Update blocks and other info after transaction
           await Promise.all([
             updateBlocksDisplay(client, elements.blocksList),
             checkBalance(client, address, elements.balanceResult),
@@ -61,6 +58,9 @@ async function init() {
         }
       );
     });
+
+    // Update transaction history initially
+    await updateTransactionHistory(client, elements.transactionsList);
 
     console.log('Successfully connected to the blockchain!');
   } catch (error) {
