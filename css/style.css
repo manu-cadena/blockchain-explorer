@@ -48,6 +48,7 @@ main {
 
 h1 {
   font-size: 1.8rem;
+  margin-bottom: 1rem;
 }
 
 h2 {
@@ -132,4 +133,42 @@ h2 {
 .amount {
   font-weight: bold;
   color: var(--primary-color);
+}
+
+.blocks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.block-item {
+  display: grid;
+  grid-template-columns: auto 2fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.block-item:hover {
+  transform: translateX(4px);
+}
+
+.block-number {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.block-details {
+  font-size: 0.9rem;
+}
+
+.block-timestamp {
+  color: #666;
+}
+
+.block-transactions {
+  text-align: right;
 }

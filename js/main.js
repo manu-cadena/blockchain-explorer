@@ -1,5 +1,5 @@
 import { createClient, createWallet } from './explorer.js';
-import { updateBlockDisplay } from './services/blockService.js';
+import { updateBlocksDisplay } from './services/blockService.js';
 import { checkBalance } from './services/balanceService.js';
 import {
   sendTransaction,
@@ -12,7 +12,7 @@ async function init() {
 
   // Get DOM elements
   const elements = {
-    blockNumber: document.getElementById('block-number'),
+    blocksList: document.getElementById('blocks-list'),
     balanceForm: document.getElementById('balance-form'),
     balanceResult: document.getElementById('balance-result'),
     transactionForm: document.getElementById('transaction-form'),
@@ -21,19 +21,20 @@ async function init() {
   };
 
   try {
-    // Initial updates
+    // Initial blocks display
     await Promise.all([
-      updateBlockDisplay(client, elements.blockNumber),
+      updateBlocksDisplay(client, elements.blocksList),
       updateTransactionHistory(client, elements.transactionsList),
     ]);
 
-    // Event Listeners
+    // Handle balance form submission
     elements.balanceForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const address = document.getElementById('address').value;
       await checkBalance(client, address, elements.balanceResult);
     });
 
+    // Handle transaction form submission
     elements.transactionForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const from = document.getElementById('from').value;
@@ -51,8 +52,9 @@ async function init() {
         elements.transactionResult,
         elements.transactionForm,
         async (address) => {
+          // Update blocks, balance, and transaction history after transaction
           await Promise.all([
-            updateBlockDisplay(client, elements.blockNumber),
+            updateBlocksDisplay(client, elements.blocksList),
             checkBalance(client, address, elements.balanceResult),
             updateTransactionHistory(client, elements.transactionsList),
           ]);
@@ -63,9 +65,9 @@ async function init() {
     console.log('Successfully connected to the blockchain!');
   } catch (error) {
     console.error('Error connecting to the blockchain:', error);
-    elements.blockNumber.textContent = 'Error connecting to blockchain';
-    elements.blockNumber.style.color = 'red';
+    elements.blocksList.innerHTML = '<p>Error connecting to blockchain</p>';
   }
 }
 
+// Call our init function
 init().catch(console.error);
