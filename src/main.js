@@ -1,14 +1,16 @@
 import { createClient, createWallet } from './explorer.js';
-import { updateBlocksDisplay } from './services/blockService.js';
-import { checkBalance } from './services/balanceService.js';
-import {
-  sendTransaction,
-  updateTransactionHistory,
-} from './services/transactionService.js';
+import { BlockService } from './services/BlockService.js';
+import { BalanceService } from './services/BalanceService.js';
+import { TransactionService } from './services/TransactionService.js';
 
 async function init() {
   const client = createClient();
   const wallet = createWallet();
+
+  // Initialize services
+  const blockService = new BlockService(client);
+  const balanceService = new BalanceService(client);
+  const transactionService = new TransactionService(client, wallet);
 
   // Get DOM elements
   const elements = {
@@ -22,13 +24,13 @@ async function init() {
 
   try {
     // Initial blocks display
-    await updateBlocksDisplay(client, elements.blocksList);
+    await blockService.execute(elements.blocksList);
 
     // Handle balance form submission
     elements.balanceForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const address = document.getElementById('address').value;
-      await checkBalance(client, address, elements.balanceResult);
+      await balanceService.execute(address, elements.balanceResult);
     });
 
     // Handle transaction form submission
@@ -41,26 +43,28 @@ async function init() {
       elements.transactionResult.textContent = 'Sending transaction...';
       elements.transactionResult.classList.add('active');
 
-      await sendTransaction(
-        wallet,
+      await transactionService.execute(
         from,
         to,
         value,
         elements.transactionResult,
         elements.transactionForm,
         async (address) => {
-          // Update blocks and other info after transaction
           await Promise.all([
-            updateBlocksDisplay(client, elements.blocksList),
-            checkBalance(client, address, elements.balanceResult),
-            updateTransactionHistory(client, elements.transactionsList),
+            blockService.execute(elements.blocksList),
+            balanceService.execute(address, elements.balanceResult),
+            transactionService.updateTransactionHistory(
+              elements.transactionsList
+            ),
           ]);
         }
       );
     });
 
     // Update transaction history initially
-    await updateTransactionHistory(client, elements.transactionsList);
+    await transactionService.updateTransactionHistory(
+      elements.transactionsList
+    );
 
     console.log('Successfully connected to the blockchain!');
   } catch (error) {

@@ -8,6 +8,7 @@
   "description": "A simple blockchain explorer for Ethereum, built with JavaScript.",
   "main": "index.js",
   "scripts": {
+    "test": "vitest",
     "start": "http-server"
   },
   "repository": {
@@ -22,6 +23,7 @@
   },
   "homepage": "https://github.com/manu-cadena/blockchain-explorer#readme",
   "devDependencies": {
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "vitest": "^3.0.5"
   }
 }
