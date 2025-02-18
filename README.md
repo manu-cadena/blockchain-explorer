@@ -1,6 +1,6 @@
 # Blockchain Explorer
 
-A modern blockchain explorer built with vanilla JavaScript that allows users to interact with Ethereum-based networks (Ganache or testnet). The application implements Object-Oriented Programming principles and follows best practices for code organization and testing.
+A simple blockchain explorer built with vanilla JavaScript that allows users to interact with Ethereum-based networks (Ganache or testnet). The application implements Object-Oriented Programming principles and follows best practices for code organization and testing.
 
 ## Features
 
